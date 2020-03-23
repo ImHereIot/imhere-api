@@ -1,5 +1,5 @@
 const handlers = {};
-const students = require("../../studentModel");
+const students = require("../students/studentModel/student");
 
 handlers.create = async (req, res) => {
   if (!req.session.cart) {
