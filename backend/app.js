@@ -29,8 +29,6 @@ app.use('/api/class',classRoute);
 
 
 
-app.listen(3000, () => {
-  console.log("servidor up");
-});
+app.listen( process.env.PORT || 5000 );
 
 module.exports = app;
