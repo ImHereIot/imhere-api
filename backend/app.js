@@ -26,6 +26,7 @@ const aluno = mongoose.model("aluno", {
 
 app.use('/api/check',studentsRoute);
 app.use('/api/class',classRoute);
+app.use('/', classRoute);
 
 
 
