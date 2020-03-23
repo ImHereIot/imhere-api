@@ -14,7 +14,7 @@ const config = () => {
                 jwt_pass: 'bananaQuente',
                 jwt_expires_in: '15d'
             }
-        case 'prod':
+        case 'production':
             return {
                 bd_string: 'mongodb+srv://juliolopes:Mh2nCjZWYX7fs-v@api-mongo-dyuua.gcp.mongodb.net/test?retryWrites=true&w=majority',
                 jwt_pass: 'bananaQuente',
