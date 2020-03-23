@@ -10,8 +10,8 @@ mongoose.connect("mongodb://localhost:3000", {
   useUnifiedTopology: true
 });
 const aluno = mongoose.model("aluno", {
-  name: string,
-  aula: string,
+  name: String,
+  aula: String,
   matriculado: Boolean
 });
 
