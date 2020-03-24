@@ -2,10 +2,10 @@ var express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const studentsRoute = require('./packages/students/routes')
-const classRoute  = require('./packages/class/routes');
-const config = require('./config/config');
-const url  = config.bd_string;
+const personRoute = require("./packages/person/routes");
+const classRoute = require("./packages/class/routes");
+const config = require("./config/config");
+const url = config.bd_string;
 
 const options = {
   reconnectTries: Number.MAX_VALUE,
@@ -17,19 +17,14 @@ const options = {
 mongoose.connect(url, options);
 mongoose.set("useCreateIndex", true);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-const aluno = mongoose.model("aluno", {
-  name: String,
-  aula: String,
-  matriculado: Boolean
-});
+app.use("/api/check", personRoute);
+app.use("/api/class", classRoute);
+app.use("/", personRoute);
 
-app.use('/api/check',studentsRoute);
-app.use('/api/class',classRoute);
-app.use('/', classRoute);
-
-
-
-app.listen( process.env.PORT || 5000 );
+const PORT = 5000;
+app.listen(process.env.PORT || PORT);
 
 module.exports = app;
