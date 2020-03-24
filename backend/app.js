@@ -8,10 +8,9 @@ const config = require("./config/config");
 const url = config.bd_string;
 
 const options = {
-  reconnectTries: Number.MAX_VALUE,
-  reconnectInterval: 500,
   poolSize: 5,
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 };
 
 mongoose.connect(url, options);
