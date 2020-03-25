@@ -20,7 +20,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use("/api/check", personRoute);
 app.use("/api/class", classRoute);
-app.use("/", personRoute);
 
 const PORT = 5000;
 app.listen(process.env.PORT || PORT);
