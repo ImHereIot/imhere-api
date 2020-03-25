@@ -3,9 +3,9 @@ const router = express.Router();
 const handlers = require('./handlers')
 
 
-router.get('/', handlers.list);
-router.post('/', handlers.create);
+router.get('/', handlers.get);
+router.post('/', handlers.post);
 router.put('/', handlers.put);
-router.delete('/cancel', handlers.cancel);
+router.delete('/delete', handlers.delete);
 
 module.exports = router;

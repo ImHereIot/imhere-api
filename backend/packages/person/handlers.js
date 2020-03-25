@@ -8,21 +8,20 @@ handlers.get = async (req, res) => {
       message: "O Registro é necessário"
     });
   }
-  const foundPerson = Person.findOne(req.body.registro, (err, docs) => {
+  const personToFind = {
+    registro : req.body.registro
+  }
+  const foundPerson = Person.find(personToFind, (err, docs) => {
     if (err) {
-      return err;
+      return res.status(201).send({
+        success: "true",
+        err
+      });
     }
-    return docs;
-  });
-  if (foundPerson != "") {
     return res.status(201).send({
       success: "true",
-      registro
+      docs
     });
-  }
-  return res.status(204).send({
-    success: "false",
-    message: "Nenhum registro foi encontrado"
   });
 };
 
@@ -43,7 +42,7 @@ handlers.post = async (req, res) => {
       message: "O registro é necessário"
     });
   }
-  else if (!req.body.identNFC) {
+  else if (!req.body.idNFC) {
     return res.status(400).send({
       success: "false",
       message: "A Tag NFC é necessário"
@@ -54,7 +53,7 @@ handlers.post = async (req, res) => {
     nomePessoa: req.body.nomePessoa,
     registro: req.body.registro,
     cadastradoAula: req.body.cadastradoAula,
-    idNFC: req.body.identNFC
+    idNFC: req.body.idNFC
   };
   Person.create(newPerson);
   return res.status(201).send({
@@ -70,58 +69,36 @@ handlers.put = async (req, res) => {
       success: "false",
       message: "O nome é necessário"
     });
-  } else if (!req.body.cadastradoAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O cadastro na aula é necessário"
-    });
-  } else if (!req.body.registro) {
-    return res.status(400).send({
-      success: "false",
-      message: "O registro é necessário"
-    });
   }
-  if (req.body.idNFC != "") {
-    var identNFC = req.body.idNFC;
-  } else {
-    identNFC = "";
+  const personToUpdate = {
+    registro: req.body.registro,
+    nomePessoa: req.body.nomePessoa,
+    cadastradoAula : req.body.cadastradoAula,
+    idNFC : req.body.idNFC
   }
-  Person.updateOne(req.body.registro);
+  await Person.updateOne(personToUpdate);
   return res.status(201).send({
     success: "true",
-    message: "Pessoa Criada com Sucesso",
-    newPerson
+    message: "Pessoa Atualizada com Sucesso",
+    personToUpdate
   });
 };
 
 handlers.delete = async (req, res) => {
-  if (!req.body.nomePessoa) {
-    return res.status(400).send({
-      success: "false",
-      message: "O nome é necessário"
-    });
-  } else if (!req.body.cadastradoAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O cadastro na aula é necessário"
-    });
-  } else if (!req.body.registro) {
+  if (!req.body.registro) {
     return res.status(400).send({
       success: "false",
       message: "O registro é necessário"
     });
   }
-  const person = {
-    nomePessoa: req.body.nomePessoa,
+  const personToDelete = {
     registro: req.body.registro,
-    cadastradoAula: req.body.cadastradoAula,
-    idNFC: req.body.idNFC
   };
-  Person.deleteOne(person);
+  Person.deleteOne(personToDelete);
   return res.status(201).send({
     success: "true",
     message: "Pessoa excluida com Sucesso",
-    person
+    personToDelete
   });
 };
 
