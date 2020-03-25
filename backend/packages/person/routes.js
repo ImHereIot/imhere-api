@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const handlers = require('./handlers');
 
-router.get('/iot/', handlers.getIot);
 
 router.get('/', handlers.get);
 router.put('/', handlers.put);

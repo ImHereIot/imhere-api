@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const classModel = new mongoose.Schema({
   idAula: { type: String, required: true, unique: true, lowercase: true },
-  alunosCadastrados: { type: String, required: true, select: false },
+  alunosCadastrados: { type: String, required: true},
   professor: { type: String, required: true },
   idNFC: {type:Number, required:true, unique:true }
 });
@@ -10,7 +10,5 @@ const classModel = new mongoose.Schema({
 classModel.pre("save", (next) => {
   return next();
 });
-
-classModel.index({nomeAluno: 'text', 'Registro': 'text', 'cadastradoAula': 'bool'});
 
 module.exports = mongoose.model("Class", classModel);
