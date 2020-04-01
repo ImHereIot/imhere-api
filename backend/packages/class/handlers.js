@@ -11,7 +11,7 @@ handlers.get = async (req, res) => {
   const classToFind = {
     idAula : req.body.idAula
   }
-  const foundClass = Class.findOne(classToFind, (err, docs) => {
+  Class.findOne(classToFind, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
@@ -76,7 +76,7 @@ handlers.put = async (req, res) => {
     professor: req.body.professor,
     idNFC: req.body.idNFC
   }
-  Class.updateOne(classToUpdate);
+  await Class.updateOne(classToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Aula atualizada com Sucesso",
