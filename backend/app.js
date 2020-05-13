@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use("/api/check", personRoute);
 app.use("/api/class", classRoute);
 app.use("/api/studentsClass", studentsClassRoute);
-app.use("/api/crewModelRoute", crewModelRoute);
+app.use("/api/crew", crewModelRoute);
 app.use("/", personRoute);
 
 const PORT = 5000;
