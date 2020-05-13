@@ -34,7 +34,7 @@ handlers.post = async (req, res) => {
     });
   }
   const newCrew = {
-    idTurma: crypto.createHash('md5'),
+    idTurma: crypto.createHash('sha1').digest('hex'),
     nomeTurma: req.body.nomeTurma,
     alunos: req.body.alunos
   };
