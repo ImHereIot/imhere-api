@@ -2,15 +2,22 @@ const Class = require("./classModel/class");
 const handlers = {};
 
 handlers.get = async (req, res) => {
-  // if (!req.body.idAula) {
-  //   return res.status(400).send({
-  //     success: "false",
-  //     message: "O id da aula é necessário"
-  //   });
-  // }
-  // const classToFind = {
-  //   idAula : req.body.idAula
-  // }
+  if (!req.body.idAula) {
+    const classToFind = { idAula : req.body.idAula }
+    Class.find(classToFind, (err, docs) => {
+      if (err) {
+        return res.status(201).send({
+          success: "true",
+          err
+        });
+      }
+      return res.status(201).send({
+        success: "true",
+        docs
+      });
+    });
+  }
+  
   Class.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
