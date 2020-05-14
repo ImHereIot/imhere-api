@@ -2,16 +2,29 @@ const handlers = {};
 const studentClassModel = require("./studentClassModel/studentClassModel");
 
 handlers.get = async (req, res) => {
-  if (!req.body.idAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O idAula é necessário"
-    });
-  }
-  const studentClassToFind  = {
-    idAula : req.body.idAula
-  }
-  const foundStudentsClass = studentClassModel.find(studentClassToFind , (err, docs) => {
+  // if (!req.body.idAula) {
+  //   return res.status(400).send({
+  //     success: "false",
+  //     message: "O idAula é necessário"
+  //   });
+  // }
+  // const studentClassToFind  = {
+  //   idAula : req.body.idAula
+  // }
+  // const foundStudentsClass = studentClassModel.find(studentClassToFind , (err, docs) => {
+  //   if (err) {
+  //     return res.status(201).send({
+  //       success: "true",
+  //       err
+  //     });
+  //   }
+  //   return res.status(201).send({
+  //     success: "true",
+  //     docs
+  //   });
+  // });
+
+  studentClassModel.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",

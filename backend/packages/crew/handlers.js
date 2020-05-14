@@ -3,19 +3,32 @@ const crypto = require('crypto');
 const handlers = {};
 
 handlers.get = async (req, res) => {
-  if (!req.body.idTurma) {
-    return res.status(400).send({
-      success: "false",
-      message: "O id da turma é necessário"
-    });
-  }
-  const crewToFind = {
-    idTurma : req.body.idTurma
-  }
-  Crew.findOne(crewToFind, (err, docs) => {
+  // if (!req.body.idTurma) {
+  //   return res.status(400).send({
+  //     success: "false",
+  //     message: "O id da turma é necessário"
+  //   });
+  // }
+  // const crewToFind = {
+  //   idTurma : req.body.idTurma
+  // }
+  // Crew.findOne(crewToFind, (err, docs) => {
+  //   if (err) {
+  //     return res.status(201).send({
+  //       success: "false",
+  //       err
+  //     });
+  //   }
+  //   return res.status(201).send({
+  //     success: "true",
+  //     docs
+  //   });
+  // });
+
+  Crew.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
-        success: "false",
+        success: "true",
         err
       });
     }
