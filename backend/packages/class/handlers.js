@@ -11,7 +11,7 @@ handlers.get = async (req, res) => {
   const classToFind = {
     idAula : req.body.idAula
   }
-  Class.find(classToFind, (err, docs) => {
+  Class.findOne(classToFind, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
