@@ -15,7 +15,7 @@ handlers.get = async (req, res) => {
   Crew.findOne(crewToFind, (err, docs) => {
     if (err) {
       return res.status(201).send({
-        success: "true",
+        success: "false",
         err
       });
     }
