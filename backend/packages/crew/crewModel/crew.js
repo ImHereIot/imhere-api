@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 const crewModel = new mongoose.Schema({
   idTurma: {type:Number, required:true },
   nomeTurma : {type:String, required:true },
