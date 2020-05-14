@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const crewModel = new mongoose.Schema({
-  idTurma: {type:ObjectId, required:true },
+  idTurma: {type:Number, required:true, unique:true },
   nomeTurma : {type:String, required:true },
   alunos : {type:Array, required:true }, 
 });
