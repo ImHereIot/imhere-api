@@ -2,6 +2,12 @@ const Class = require("./classModel/class");
 const handlers = {};
 
 handlers.get = async (req, res) => {
+  if (!req.body.idAula) {
+    return res.status(400).send({
+      success: "false",
+      message: "O id da aula é necessário"
+    });
+  }
   const classToFind = {
     idAula : req.body.idAula
   }
@@ -18,7 +24,6 @@ handlers.get = async (req, res) => {
     });
   });
 };
-  	    
 
 handlers.post = async (req, res) => {
   if (!req.body.idAula) {
