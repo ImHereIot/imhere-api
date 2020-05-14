@@ -5,31 +5,18 @@ handlers.get = async (req, res) => {
   const classToFind = {
     idAula : req.body.idAula
   }
-  // Class.findOne(classToFind, (err, docs) => {
-    
-  //   if (err) {
-  //     return res.status(201).send({
-  //       success: "true",
-  //       err
-  //     });
-  //   }
-  //   return res.status(201).send({
-  //     success: "true",
-  //     docs
-  //   });
-  // });
-
-  Class.find({}, function(err, docs) {
-    var userMap = {};
-
-    docs.forEach(function(docs) {
-      userMap[user._id] = docs;
-    });
+  Class.find(classToFind, (err, docs) => {
+    if (err) {
+      return res.status(201).send({
+        success: "true",
+        err
+      });
+    }
     return res.status(201).send({
       success: "true",
-      userMap
+      docs
     });
-  })
+  });
 };
   	    
 
