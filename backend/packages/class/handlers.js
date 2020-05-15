@@ -66,6 +66,7 @@ handlers.post = async (req, res) => {
     unidade: req.body.unidade,
     data: req.body.data,
     horario: req.body.horario,
+    detalhe: req.body.detalhe,
 
   };
   Class.create(newClass);
