@@ -5,7 +5,11 @@ const classModel = new mongoose.Schema({
   alunosCadastrados: { type: Array, required: true},
   professor: { type: String, required: true },
   idNFC: {type:Number, required:true, unique:true },
-  idTurma: {type:Number, required:true }
+  idTurma: {type:Number, required:true },
+  sala: {type:String, required:true },
+  unidade: {type:Number, required:true },
+  data: {type:Date, required:true },
+  horario: {type:Number, required:true },
 });
 
 classModel.pre("save", (next) => {

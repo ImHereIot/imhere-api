@@ -60,7 +60,13 @@ handlers.post = async (req, res) => {
     idAula: req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
-    idNFC: req.body.idNFC
+    idNFC: req.body.idNFC,
+    idTurma: req.body.idTurma,
+    sala: req.body.sala,
+    unidade: req.body.unidade,
+    data: req.body.data,
+    horario: req.body.horario,
+
   };
   Class.create(newClass);
   return res.status(201).send({
