@@ -33,12 +33,7 @@ handlers.get = async (req, res) => {
 };
 
 handlers.post = async (req, res) => {
- if (!req.body.alunosCadastrados) {
-    return res.status(400).send({
-      success: "false",
-      message: "O cadastro dos alunos na aula é necessário"
-    });
-  } else if (!req.body.professor) {
+  if (!req.body.professor) {
     return res.status(400).send({
       success: "false",
       message: "O professor é necessário"
