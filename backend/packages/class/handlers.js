@@ -17,7 +17,7 @@ handlers.get = async (req, res) => {
   //     });
   //   });
   // }
-  
+  console.log(req);
   Class.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
@@ -39,6 +39,8 @@ handlers.post = async (req, res) => {
       message: "O professor é necessário"
     });
   }
+
+  console.log(req);
 
   const newClass = {
     idAula: req.body.idAula,
@@ -68,6 +70,7 @@ handlers.put = async (req, res) => {
       message: "O id da Aula é necessário"
     });
   }
+  console.log(req);
   const classToUpdate = {
     idAula:req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
@@ -89,6 +92,7 @@ handlers.delete = async (req, res) => {
       message: "O id da aula é necessário"
     });
   }
+  console.log(req);
   const classToDelete = {
     idAula : req.body.idAula
   };
