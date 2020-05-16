@@ -7,7 +7,7 @@ const classModel = new mongoose.Schema({
   idNFC: {type:Number, required:true, unique:true },
   idTurma: {type:Number, required:true },
   sala: {type:String},
-  unidade: {type:Number},
+  unidade: {type:String},
   data: {type:String},
   horario: {type:Number},
   detalhe: {type:String},
