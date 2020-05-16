@@ -44,6 +44,7 @@ handlers.post = async (req, res) => {
 
   const newClass = {
     idAula: req.query.idAula,
+    nomeAula: req.query.nomeAula,
     alunosCadastrados: req.query.alunosCadastrados,
     professor: req.query.professor,
     idNFC: req.query.idNFC,
