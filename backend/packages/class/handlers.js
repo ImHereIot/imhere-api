@@ -33,12 +33,7 @@ handlers.get = async (req, res) => {
 };
 
 handlers.post = async (req, res) => {
-  if (!req.body.idAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O id da aula é necessário"
-    });
-  } else if (!req.body.alunosCadastrados) {
+ if (!req.body.alunosCadastrados) {
     return res.status(400).send({
       success: "false",
       message: "O cadastro dos alunos na aula é necessário"
@@ -47,12 +42,6 @@ handlers.post = async (req, res) => {
     return res.status(400).send({
       success: "false",
       message: "O professor é necessário"
-    });
-  }
-  else if (!req.body.idNFC) {
-    return res.status(400).send({
-      success: "false",
-      message: "A Tag NFC é necessário"
     });
   }
 
