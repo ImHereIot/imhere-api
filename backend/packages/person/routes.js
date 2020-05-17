@@ -5,6 +5,7 @@ const handlers = require('./handlers');
 
 router.get('/', handlers.get);
 router.put('/', handlers.put);
+router.post('/auth', handlers.authenticate);
 router.post('/', handlers.post);
 router.delete('/delete', handlers.delete);
 

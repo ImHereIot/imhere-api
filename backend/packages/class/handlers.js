@@ -1,6 +1,8 @@
 const Class = require("./classModel/class");
 const crypto = require('crypto');
 const handlers = {};
+const BodyParser = require('body-parser');
+
 
 handlers.get = async (req, res) => {
   // if (!req.body.idAula) {
@@ -39,6 +41,7 @@ handlers.post = async (req, res) => {
       message: "O professor é necessário"
     });
   }
+
 
 
   const newClass = {
