@@ -43,7 +43,6 @@ handlers.post = async (req, res) => {
   console.log(req);
 
   const newClass = {
-<<<<<<< HEAD
     idAula: req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
@@ -55,20 +54,6 @@ handlers.post = async (req, res) => {
     horario: req.body.horario,
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
-=======
-    idAula: req.query.idAula,
-    nomeAula: req.query.nomeAula,
-    alunosCadastrados: req.query.alunosCadastrados,
-    professor: req.query.professor,
-    idNFC: req.query.idNFC,
-    idTurma: req.query.idTurma,
-    sala: req.query.sala,
-    unidade: req.query.unidade,
-    data: req.query.data,
-    horario: req.query.horario,
-    detalhe: req.query.detalhe,
-
->>>>>>> b5d8c8cf2a82ad865e225121ddf8c44f9b53dc26
   };
   Class.create(newClass);
   return res.status(201).send({
