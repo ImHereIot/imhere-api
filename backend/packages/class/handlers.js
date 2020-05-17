@@ -69,7 +69,6 @@ handlers.put = async (req, res) => {
     });
   }
   const classToUpdate = {
-    idAula: req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
     idNFC: req.body.idNFC,
@@ -80,7 +79,8 @@ handlers.put = async (req, res) => {
     horario: req.body.horario,
     detalhe: req.body.detalhe,
   }
-  await Class.updateOne(classToUpdate);
+  const putfilter = {idAula: req.body.idAula}
+  await Class.findOneAndUpdate(putfilter, classToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Aula atualizada com Sucesso",
