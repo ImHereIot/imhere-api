@@ -81,15 +81,14 @@ handlers.put = async (req, res) => {
 };
 
 handlers.delete = async (req, res) => {
-  if (!req.body.idAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O id da aula é necessário"
-    });
-  }
+  const {idTurma} = req.params;
+
   const crewToDelete = {
-    idAula : req.body.idAula
+    idTurma : req.body.idTurma
   };
+  
+  var deletedClass = await Crew.findOneAndDelete({idTurma: idTurma });
+
   Crew.deleteOne(crewToDelete);
   return res.status(201).send({
     success: "true",
