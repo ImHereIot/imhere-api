@@ -1,4 +1,5 @@
 const Class = require("./classModel/class");
+const crypto = require('crypto');
 const handlers = {};
 
 handlers.get = async (req, res) => {
@@ -42,10 +43,9 @@ handlers.post = async (req, res) => {
 
 
   const newClass = {
-    idAula: req.body.idAula,
+    idAula: crypto.createHash('sha1').digest('hex'),
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
-    idNFC: req.body.idNFC,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
