@@ -18,7 +18,6 @@ handlers.get = async (req, res) => {
   //     });
   //   });
   // }
-  console.log(req);
   Class.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
@@ -69,7 +68,6 @@ handlers.put = async (req, res) => {
       message: "O id da Aula é necessário"
     });
   }
-  console.log(req);
   const classToUpdate = {
     idAula: req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
@@ -92,7 +90,6 @@ handlers.put = async (req, res) => {
 
 handlers.delete = async (req, res) => {
   const {idAula} = req.params;
-  console.log(idAula)
   
   var deletedClass = await Class.findOneAndDelete({idAula: idAula });
   return res.status(201).send({
