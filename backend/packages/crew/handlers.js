@@ -47,7 +47,7 @@ handlers.post = async (req, res) => {
     });
   }
   const newCrew = {
-    idTurma: crypto.randomBytes(5).toString('HEX'),
+    idTurma: crypto.randomBytes(20).toString('HEX'),
     nomeTurma: req.body.nomeTurma,
     alunos: req.body.alunos
   };
