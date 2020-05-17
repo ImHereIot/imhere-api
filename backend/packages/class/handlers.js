@@ -68,12 +68,9 @@ handlers.put = async (req, res) => {
       message: "O id da Aula é necessário"
     });
   }
-  const putfilter = {idAula: req.params}
   
   const classToUpdate = {
-    alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
-    idNFC: req.body.idNFC,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
@@ -81,7 +78,7 @@ handlers.put = async (req, res) => {
     horario: req.body.horario,
     detalhe: req.body.detalhe,
   }
-  await Class.findOneAndUpdate(putfilter, classToUpdate);
+  await Class.findOneAndUpdate({idAula: req.params}, classToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Aula atualizada com Sucesso",
