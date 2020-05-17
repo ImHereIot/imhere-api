@@ -94,7 +94,7 @@ handlers.delete = async (req, res) => {
   const {idAula} = req.params;
   console.log(idAula)
   
-  var deletedClass = await Class.findOneAndDelete(idAula);
+  var deletedClass = await Class.findOneAndDelete({idAula: idAula });
   return res.status(201).send({
     success: "true",
     message: "Aula excluida com Sucesso",
