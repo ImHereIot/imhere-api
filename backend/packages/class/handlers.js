@@ -62,7 +62,7 @@ handlers.post = async (req, res) => {
 };
 
 handlers.put = async (req, res) => {
-  if (!req.body.idAula) {
+  if (!req.params) {
     return res.status(400).send({
       success: "false",
       message: "O id da Aula é necessário"
