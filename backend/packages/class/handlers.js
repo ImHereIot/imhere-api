@@ -42,7 +42,7 @@ handlers.post = async (req, res) => {
 
 
   const newClass = {
-    idAula: crypto.createHash('sha1').digest('hex'),
+    idAula: crypto.randomBytes(20).toString('HEX'),
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
     idTurma: req.body.idTurma,
