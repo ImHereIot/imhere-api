@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const classModel = new mongoose.Schema({
-  idAula: { type: Number,  unique: true},
-  nomeAula: { type: String,  lowercase: true },
+  idAula: { type: String,  unique: true},
+  nomeAula: { type: String,  uppercase: true },
   alunosCadastrados: { type: Array, },
   professor: { type: String, required: true },
   idTurma: {type:String,},
