@@ -1,8 +1,8 @@
 const handlers = {};
 const Person = require("./personModel/person");
-const jwt  = require('jsonwebtoken');
 
 handlers.get = async (req, res) => {
+
   Person.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
@@ -47,12 +47,13 @@ handlers.post = async (req, res) => {
     registro: body.registro,
     cadastradoAula: body.cadastradoAula,
     idNFC: body.idNFC,
+    tipoPessoa : body.tipoPessoa,
     password : body.password
   };
   Person.create(newPerson);
   return res.status(201).send({
     success: "true",
-    message: "Pessoa Autenticada com Sucesso",
+    message: "Pessoa Criada com Sucesso",
     newPerson
   });
 };

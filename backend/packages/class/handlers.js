@@ -5,21 +5,6 @@ const BodyParser = require('body-parser');
 
 
 handlers.get = async (req, res) => {
-  // if (!req.body.idAula) {
-  //   const classToFind = { idAula : req.body.idAula }
-  //   Class.findOne(classToFind, (err, docs) => {
-  //     if (err) {
-  //       return res.status(201).send({
-  //         success: "true",
-  //         err
-  //       });
-  //     }
-  //     return res.status(201).send({
-  //       success: "true",
-  //       docs
-  //     });
-  //   });
-  // }
   Class.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
@@ -34,6 +19,26 @@ handlers.get = async (req, res) => {
   });
 };
 
+handlers.getOne = async (req, res) => {
+  const {idAula} = req.params;
+  console.log(req.params);
+  console.log(idAula);
+
+
+  Class.find({idAula: idAula}, (err, docs) => {
+    if (err) {
+      return res.status(201).send({
+        success: "true",
+        err
+      });
+    }
+    return res.status(201).send({
+      success: "true",
+      docs
+    });
+  });
+} 
+
 handlers.post = async (req, res) => {
   if (!req.body.professor) {
     return res.status(400).send({
@@ -42,12 +47,11 @@ handlers.post = async (req, res) => {
     });
   }
 
-
-
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
+    idProfessor : req.body.idProfessor,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,

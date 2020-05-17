@@ -5,6 +5,7 @@ const personModel = new mongoose.Schema({
   registro: { type: Number, required: true, unique: true },
   cadastradoAula: { type: Boolean, },
   idNFC: { type: Number,},
+  tipoPessoa: { type: Number,},
   password: { type: String, required: true},
   email: { type: String, } 
 });
