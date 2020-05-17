@@ -33,7 +33,7 @@ handlers.get = async (req, res) => {
 };
 
 handlers.post = async (req, res) => {
-  if (!req.query.professor) {
+  if (!req.body.professor) {
     return res.status(400).send({
       success: "false",
       message: "O professor é necessário"
@@ -43,17 +43,17 @@ handlers.post = async (req, res) => {
   console.log(req);
 
   const newClass = {
-    idAula: req.query.idAula,
-    alunosCadastrados: req.query.alunosCadastrados,
-    professor: req.query.professor,
-    idNFC: req.query.idNFC,
-    idTurma: req.query.idTurma,
-    sala: req.query.sala,
-    unidade: req.query.unidade,
-    data: req.query.data,
-    horario: req.query.horario,
-    detalhe: req.query.detalhe,
-
+    idAula: req.body.idAula,
+    alunosCadastrados: req.body.alunosCadastrados,
+    professor: req.body.professor,
+    idNFC: req.body.idNFC,
+    idTurma: req.body.idTurma,
+    sala: req.body.sala,
+    unidade: req.body.unidade,
+    data: req.body.data,
+    horario: req.body.horario,
+    detalhe: req.body.detalhe,
+    nomeAula: req.body.nomeAula,
   };
   Class.create(newClass);
   return res.status(201).send({
@@ -72,10 +72,16 @@ handlers.put = async (req, res) => {
   }
   console.log(req);
   const classToUpdate = {
-    idAula:req.body.idAula,
+    idAula: req.body.idAula,
     alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
-    idNFC: req.body.idNFC
+    idNFC: req.body.idNFC,
+    idTurma: req.body.idTurma,
+    sala: req.body.sala,
+    unidade: req.body.unidade,
+    data: req.body.data,
+    horario: req.body.horario,
+    detalhe: req.body.detalhe,
   }
   await Class.updateOne(classToUpdate);
   return res.status(201).send({
@@ -86,15 +92,10 @@ handlers.put = async (req, res) => {
 };
 
 handlers.delete = async (req, res) => {
-  if (!req.query.idAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O id da aula é necessário"
-    });
-  }
-  console.log(req);
+  const {idAula} = req.params;
+  
   const classToDelete = {
-    idAula : req.body.idAula
+    idAula : idAula
   };
   Class.deleteOne(classToDelete);
   return res.status(201).send({

@@ -6,6 +6,6 @@ const handlers = require('./handlers')
 router.get('/', handlers.get);
 router.post('/', handlers.post);
 router.put('/', handlers.put);
-router.delete('/delete/:idSala', handlers.delete);
+router.delete('/delete/:idAula', handlers.delete);
 
 module.exports = router;
