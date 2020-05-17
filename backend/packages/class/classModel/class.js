@@ -5,7 +5,7 @@ const classModel = new mongoose.Schema({
   nomeAula: { type: String,  lowercase: true },
   alunosCadastrados: { type: Array, },
   professor: { type: String, required: true },
-  idNFC: {type:String,  unique:true },
+  idNFC: {type:String,},
   idTurma: {type:String, },
   sala: {type:String},
   unidade: {type:String},
