@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const classModel = new mongoose.Schema({
-  idAula: { type: Number, required: true, unique: true},
-  nomeAula: { type: String, required: true, lowercase: true },
-  alunosCadastrados: { type: Array, required: true},
+  idAula: { type: Number,  unique: true},
+  nomeAula: { type: String,  lowercase: true },
+  alunosCadastrados: { type: Array, },
   professor: { type: String, required: true },
   idNFC: {type:String, required:true, unique:true },
   idTurma: {type:String, required:true },

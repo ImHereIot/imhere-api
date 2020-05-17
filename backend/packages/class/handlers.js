@@ -40,7 +40,6 @@ handlers.post = async (req, res) => {
     });
   }
 
-  console.log(req);
 
   const newClass = {
     idAula: req.body.idAula,
@@ -93,15 +92,13 @@ handlers.put = async (req, res) => {
 
 handlers.delete = async (req, res) => {
   const {idAula} = req.params;
+  console.log(idAula)
   
-  const classToDelete = {
-    idAula : idAula
-  };
-  Class.deleteOne(classToDelete);
+  var deletedClass = await Class.findOneAndDelete(idAula);
   return res.status(201).send({
     success: "true",
     message: "Aula excluida com Sucesso",
-    classToDelete
+    deletedClass
   });
 };
 
