@@ -60,7 +60,7 @@ handlers.post = async (req, res) => {
   const newStudentsClass = {
     nomePessoa: req.body.idAula,
     idPessoa: req.body.idPessoa,
-    data: req.body.Data,
+    data: req.body.data,
     presenca: 1,
   };
   studentClassModel.create(newStudentsClass);

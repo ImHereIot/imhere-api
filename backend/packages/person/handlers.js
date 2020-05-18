@@ -2,7 +2,6 @@ const handlers = {};
 const Person = require("./personModel/person");
 
 handlers.get = async (req, res) => {
-
   Person.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
@@ -20,16 +19,14 @@ handlers.get = async (req, res) => {
 handlers.authenticate = async (req, res) => {
   const registro = req.body.registro;
   const password = req.body.password;
-
+  
   const user = await Person.findOne({ 
     registro: registro,
     password: password,
   });
 
-  console.log(Person);
-  console.log(user);
 
-  if(!!user){
+  if(!!user) {
     return res.status(201).send ({
       ...user.toJSON(),
     });
@@ -38,7 +35,6 @@ handlers.authenticate = async (req, res) => {
     success: "False",
     message: "Senha ou usuario incorreto",
   });
-
 }
 
 handlers.post = async (req, res) => {
