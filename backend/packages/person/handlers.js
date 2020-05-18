@@ -23,8 +23,11 @@ handlers.authenticate = async (req, res) => {
 
   const user = await Person.findOne({ 
     registro: registro,
-    password: password
+    password: password,
   });
+
+  console.log(Person);
+  console.log(user);
 
   if(!!user){
     return res.status(201).send ({

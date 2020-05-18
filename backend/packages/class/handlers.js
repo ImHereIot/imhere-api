@@ -1,20 +1,36 @@
 const Class = require("./classModel/class");
 const crypto = require('crypto');
 const handlers = {};
-const BodyParser = require('body-parser');
 
 
 handlers.get = async (req, res) => {
+  const {registro} = req.params;
+
   Class.find({}, (err, docs) => {
     if (err) {
       return res.status(201).send({
-        success: "true",
+        success: "false",
         err
       });
+    };
+
+    function filtraAulaAluno(aulas,retorno) {
+      retorno = new Array();
+      aulas.forEach((busca)=> {
+        if(busca.alunosCadastrados.includes(registro)){
+          console.log(busca);
+          retorno.push(busca);
+        }
+      });
+      return retorno;
     }
+
+
+    const retornoAula = filtraAulaAluno(docs);
+
     return res.status(201).send({
       success: "true",
-      docs
+      retornoAula
     });
   });
 };
@@ -80,6 +96,7 @@ handlers.put = async (req, res) => {
   
   const classToUpdate = {
     professor: req.body.professor,
+    alunosCadastrados: req.body.alunosCadastrados,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
