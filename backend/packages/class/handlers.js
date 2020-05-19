@@ -60,7 +60,7 @@ handlers.post = async (req, res) => {
   }
   
   var alunosParaEnviar = []
-  await Crew.find({idTurma: req.body.idTurma}, (err, retCrew) => {
+  await Crew.findOne({idTurma: req.body.idTurma}, (err, retCrew) => {
     alunosParaEnviar = retCrew.alunos;
     console.log(alunosParaEnviar);
   })
@@ -70,7 +70,7 @@ handlers.post = async (req, res) => {
     idAula: crypto.randomBytes(20).toString('HEX'),
     professor: req.body.professor,
     idProfessor : req.body.idProfessor,
-    alunosCadastrados: alunosParaEnviar.push(req.body.idProfessor),
+    alunosCadastrados: alunosParaEnviar,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
@@ -79,7 +79,8 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
-  
+  console.log(newClass.alunosCadastrados);
+  newClass.alunosCadastrados.push(req.body.idProfessor);
   await Class.create(newClass);
 
   return res.status(201).send({
