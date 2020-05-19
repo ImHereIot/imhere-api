@@ -69,9 +69,8 @@ handlers.post = async (req, res) => {
   var alunosParaEnviar = []
   await Crew.findOne({idTurma: idTurma}, (err, docs) => {
     alunosParaEnviar = docs.alunos;
-    console.log(alunosParaEnviar);
-  })
-
+    console.log(alunosParaEnviar, 'aaaaaaa');
+  }).exec();
 
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
@@ -88,7 +87,7 @@ handlers.post = async (req, res) => {
   };
   
   newClass.alunosCadastrados.push(req.body.idProfessor);
-  await Class.create(newClass);
+  Class.create(newClass);
 
   return res.status(201).send({
     success: "true",
