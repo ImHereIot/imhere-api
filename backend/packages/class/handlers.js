@@ -1,9 +1,10 @@
 const Class = require("./classModel/class");
+const Crew = require("../crew/crewModel/crew");
 const crypto = require('crypto');
 const handlers = {};
 
 
-handlers.get = async (req, res) => {
+handlers.get = async (req, res) => { 
   const {registro} = req.params;
 
   Class.find({}, (err, docs) => {
@@ -18,7 +19,6 @@ handlers.get = async (req, res) => {
       var retorno = [];
       aulas.forEach((busca)=> {
         if(busca.alunosCadastrados.includes(registro)){
-          console.log(busca);
           retorno.push(busca);
         }
       });
@@ -58,12 +58,18 @@ handlers.post = async (req, res) => {
       message: "O professor é necessário"
     });
   }
+  
+  var alunosParaEnviar = []
+  await Crew.findOne({idTurma: req.body.idTurma}, (err, retCrew) => {
+    alunosParaEnviar = retCrew.alunos;
+  })
+
 
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
     professor: req.body.professor,
     idProfessor : req.body.idProfessor,
-    alunosCadastrados: [],
+    alunosCadastrados: alunosParaEnviar,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
@@ -72,10 +78,12 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
-  if(req.body.idProfessor != ''){
-    newClass.alunosCadastrados.push(req.body.idProfessor);
+  console.log(newClass.alunosCadastrados);
+  if(req.body.idProfessor != '') {
+    await newClass.alunosCadastrados.push(req.body.idProfessor);
   }
-  Class.create(newClass);
+  await Class.create(newClass);
+
   return res.status(201).send({
     success: "true",
     message: "Aula Criada com Sucesso",
@@ -94,10 +102,9 @@ handlers.put = async (req, res) => {
   const {idAula} = req.params;
   
   const classToUpdate = {
-    idTurma: req.body.idTurma,
     sala: req.body.sala,
-    unidade: req.body.unidade,
     data: req.body.data,
+    unidade: req.body.unidade,
     horario: req.body.horario,
     detalhe: req.body.detalhe,
   }

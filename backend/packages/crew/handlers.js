@@ -40,15 +40,8 @@ handlers.get = async (req, res) => {
 };
 
 handlers.post = async (req, res) => {
-    if (!req.body.nomeTurma) {
-    return res.status(400).send({
-      success: "false",
-      message: "O nome da turma  é necessário"
-    });
-  }
   const newCrew = {
-    idTurma: crypto.randomBytes(20).toString('HEX'),
-    nomeTurma: req.body.nomeTurma,
+    idTurma: req.body.idTurma,
     alunos: req.body.alunos
   };
   Crew.create(newCrew);
