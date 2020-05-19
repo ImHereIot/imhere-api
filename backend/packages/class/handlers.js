@@ -58,10 +58,17 @@ handlers.post = async (req, res) => {
       message: "O professor é necessário"
     });
   }
+  if (!req.body.idTurma) {
+    return res.status(400).send({
+      success: "false",
+      message: "O idTurma é necessário"
+    });
+  }
+  const idTurma = req.body.idTurma;
   
   var alunosParaEnviar = []
-  await Crew.findOne({idTurma: req.body.idTurma}, (err, retCrew) => {
-    alunosParaEnviar = retCrew.alunos;
+  await Crew.findOne({idTurma: idTurma}, (err, docs) => {
+    alunosParaEnviar = docs.alunos;
     console.log(alunosParaEnviar);
   })
 
@@ -79,7 +86,7 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
-  console.log(newClass.alunosCadastrados);
+  
   newClass.alunosCadastrados.push(req.body.idProfessor);
   await Class.create(newClass);
 
