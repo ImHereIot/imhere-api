@@ -94,7 +94,6 @@ handlers.put = async (req, res) => {
   const {idAula} = req.params;
   
   const classToUpdate = {
-    alunosCadastrados: req.body.alunosCadastrados,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
