@@ -60,7 +60,7 @@ handlers.post = async (req, res) => {
   }
   
   var alunosParaEnviar = []
-  await Crew.findOne({idTurma: req.body.idTurma}, (err, retCrew) => {
+  await Crew.find({idTurma: req.body.idTurma}, (err, retCrew) => {
     alunosParaEnviar = retCrew.alunos;
     console.log(alunosParaEnviar);
   })
