@@ -66,12 +66,11 @@ handlers.post = async (req, res) => {
   })
 
 
-  
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
     professor: req.body.professor,
     idProfessor : req.body.idProfessor,
-    alunosCadastrados: alunosParaEnviar,
+    alunosCadastrados: alunosParaEnviar.push(req.body.idProfessor),
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
@@ -80,7 +79,7 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
-  alunosParaEnviar.push(req.body.idProfessor);
+  
   await Class.create(newClass);
 
   return res.status(201).send({
