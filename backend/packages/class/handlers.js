@@ -14,8 +14,8 @@ handlers.get = async (req, res) => {
       });
     };
 
-    function filtraAulaAluno(aulas,retorno) {
-      retorno = new Array();
+    function filtraAulaAluno(aulas) {
+      var retorno = [];
       aulas.forEach((busca)=> {
         if(busca.alunosCadastrados.includes(registro)){
           console.log(busca);
@@ -24,7 +24,6 @@ handlers.get = async (req, res) => {
       });
       return retorno;
     }
-
 
     const retornoAula = filtraAulaAluno(docs);
 
@@ -37,9 +36,6 @@ handlers.get = async (req, res) => {
 
 handlers.getOne = async (req, res) => {
   const {idAula} = req.params;
-  console.log(req.params);
-  console.log(idAula);
-
 
   Class.find({idAula: idAula}, (err, docs) => {
     if (err) {
@@ -53,7 +49,7 @@ handlers.getOne = async (req, res) => {
       docs
     });
   });
-} 
+};
 
 handlers.post = async (req, res) => {
   if (!req.body.professor) {
@@ -65,9 +61,9 @@ handlers.post = async (req, res) => {
 
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
-    alunosCadastrados: req.body.alunosCadastrados,
     professor: req.body.professor,
     idProfessor : req.body.idProfessor,
+    alunosCadastrados: [],
     idTurma: req.body.idTurma,
     sala: req.body.sala,
     unidade: req.body.unidade,
@@ -76,6 +72,9 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
+  if(req.body.idProfessor != ''){
+    newClass.alunosCadastrados.push(req.body.idProfessor);
+  }
   Class.create(newClass);
   return res.status(201).send({
     success: "true",
@@ -96,6 +95,7 @@ handlers.put = async (req, res) => {
   
   const classToUpdate = {
     professor: req.body.professor,
+    idProfessor: req.body.idProfessor,
     alunosCadastrados: req.body.alunosCadastrados,
     idTurma: req.body.idTurma,
     sala: req.body.sala,
@@ -114,7 +114,7 @@ handlers.put = async (req, res) => {
 
 handlers.delete = async (req, res) => {
   const {idAula} = req.params;
-  
+
   var deletedClass = await Class.findOneAndDelete({idAula: idAula });
   return res.status(201).send({
     success: "true",
