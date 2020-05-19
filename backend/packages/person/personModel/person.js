@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const personModel = new mongoose.Schema({
   nomePessoa: { type: String, },
   registro: { type: Number, required: true, unique: true },
-  cadastradoAula: { type: Boolean, },
   idNFC: { type: Number,},
   tipoPessoa: { type: Number,},
   password: { type: String, required: true},

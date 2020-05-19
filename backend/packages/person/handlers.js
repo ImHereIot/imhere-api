@@ -44,10 +44,10 @@ handlers.post = async (req, res) => {
   const newPerson = {
     nomePessoa: body.nomePessoa,
     registro: body.registro,
-    cadastradoAula: body.cadastradoAula,
     idNFC: body.idNFC,
     tipoPessoa : body.tipoPessoa,
-    password : body.password
+    password : body.password,
+    email : body.email
   };
   Person.create(newPerson);
   return res.status(201).send({
@@ -67,9 +67,10 @@ handlers.put = async (req, res) => {
   const personToUpdate = {
     registro: req.body.registro,
     nomePessoa: req.body.nomePessoa,
-    cadastradoAula : req.body.cadastradoAula,
+    email : req.body.email,
     idNFC : req.body.idNFC
-  }
+  };
+
   await Person.updateOne(personToUpdate);
   return res.status(201).send({
     success: "true",

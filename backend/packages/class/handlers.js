@@ -62,9 +62,11 @@ handlers.post = async (req, res) => {
   var alunosParaEnviar = []
   await Crew.findOne({idTurma: req.body.idTurma}, (err, retCrew) => {
     alunosParaEnviar = retCrew.alunos;
+    console.log(alunosParaEnviar);
   })
 
 
+  alunosParaEnviar.push(req.body.idProfessor);
   const newClass = {
     idAula: crypto.randomBytes(20).toString('HEX'),
     professor: req.body.professor,
@@ -78,10 +80,6 @@ handlers.post = async (req, res) => {
     detalhe: req.body.detalhe,
     nomeAula: req.body.nomeAula,
   };
-  console.log(newClass.alunosCadastrados);
-  if(req.body.idProfessor != '') {
-    await newClass.alunosCadastrados.push(req.body.idProfessor);
-  }
   await Class.create(newClass);
 
   return res.status(201).send({
