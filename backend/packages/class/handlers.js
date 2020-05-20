@@ -52,48 +52,53 @@ handlers.getOne = async (req, res) => {
 };
 
 handlers.post = async (req, res) => {
-  if (!req.body.professor) {
-    return res.status(400).send({
-      success: "false",
-      message: "O professor é necessário"
-    });
+  try {
+    const idTurma = req.body.idTurma;
+    
+    if (!req.body.professor) {
+      return res.status(400).send({
+        success: "false",
+        message: "O professor é necessário"
+      });
+    }
+    if (!req.body.idTurma) {
+      return res.status(400).send({
+        success: "false",
+        message: "O idTurma é necessário"
+      });
+    }
+    
+    function buscaCrew(idToSearch) {
+      const search = idToSearch
+      Crew.findOne({idTurma: search}, (err, docs) => {
+      }).then((docs)=>{
+        console.log(docs.alunos);
+        const newClass = {
+          idAula: crypto.randomBytes(20).toString('HEX'),
+          professor: req.body.professor,
+          idProfessor : req.body.idProfessor,
+          alunosCadastrados: docs.alunos,
+          idTurma: req.body.idTurma,
+          sala: req.body.sala,
+          unidade: req.body.unidade,
+          data: req.body.data,
+          horario: req.body.horario,
+          detalhe: req.body.detalhe,
+          nomeAula: req.body.nomeAula,
+        };
+        newClass.alunosCadastrados.push(req.body.idProfessor);
+        Class.create(newClass);
+        return res.status(201).send({
+          success: "true",
+          message: "Aula Criada com Sucesso",
+          newClass
+        });
+      })
+    }
+    buscaCrew(idTurma);
+  } catch (error) {
+    return res.status(400).send({message:error.message})
   }
-  if (!req.body.idTurma) {
-    return res.status(400).send({
-      success: "false",
-      message: "O idTurma é necessário"
-    });
-  }
-  const idTurma = req.body.idTurma;
-  
-  var alunosParaEnviar = []
-  await Crew.findOne({idTurma: idTurma}, (err, docs) => {
-    alunosParaEnviar = docs.alunos;
-    console.log(alunosParaEnviar, 'aaaaaaa');
-  }).exec();
-
-  const newClass = {
-    idAula: crypto.randomBytes(20).toString('HEX'),
-    professor: req.body.professor,
-    idProfessor : req.body.idProfessor,
-    alunosCadastrados: alunosParaEnviar,
-    idTurma: req.body.idTurma,
-    sala: req.body.sala,
-    unidade: req.body.unidade,
-    data: req.body.data,
-    horario: req.body.horario,
-    detalhe: req.body.detalhe,
-    nomeAula: req.body.nomeAula,
-  };
-  
-  newClass.alunosCadastrados.push(req.body.idProfessor);
-  Class.create(newClass);
-
-  return res.status(201).send({
-    success: "true",
-    message: "Aula Criada com Sucesso",
-    newClass
-  });
 };
 
 handlers.put = async (req, res) => {
