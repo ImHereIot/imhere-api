@@ -9,8 +9,8 @@ const classModel = new mongoose.Schema({
   idTurma: {type:String,},
   sala: {type:String},
   unidade: {type:String},
-  data: {type:String},
-  horario: {type:String},
+  data: {type:Date},
+  horario: {type:Date},
   detalhe: {type:String},
 });
 
