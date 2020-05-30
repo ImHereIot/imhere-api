@@ -4,8 +4,8 @@ const crypto = require('crypto');
 const handlers = {};
 
 
-handlers.get = async (req, res) => { 
-  const {registro} = req.params;
+handlers.get = async (req, res) => {
+  const { registro } = req.params;
 
   Class.find({}, (err, docs) => {
     if (err) {
@@ -17,8 +17,8 @@ handlers.get = async (req, res) => {
 
     function filtraAulaAluno(aulas) {
       var retorno = [];
-      aulas.forEach((busca)=> {
-        if(busca.alunosCadastrados.includes(registro)){
+      aulas.forEach((busca) => {
+        if (busca.alunosCadastrados.includes(registro)) {
           retorno.push(busca);
         }
       });
@@ -35,9 +35,9 @@ handlers.get = async (req, res) => {
 };
 
 handlers.getOne = async (req, res) => {
-  const {idAula} = req.params;
+  const { idAula } = req.params;
 
-  Class.find({idAula: idAula}, (err, docs) => {
+  Class.find({ idAula: idAula }, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
@@ -54,7 +54,7 @@ handlers.getOne = async (req, res) => {
 handlers.post = async (req, res) => {
   try {
     const idTurma = req.body.idTurma;
-    
+
     if (!req.body.professor) {
       return res.status(400).send({
         success: "false",
@@ -67,16 +67,16 @@ handlers.post = async (req, res) => {
         message: "O idTurma é necessário"
       });
     }
-    
+
     function buscaCrew(idToSearch) {
       const search = idToSearch
-      Crew.findOne({idTurma: search}, (err, docs) => {
-      }).then((docs)=>{
+      Crew.findOne({ idTurma: search }, (err, docs) => {
+      }).then((docs) => {
         console.log(docs.alunos);
         const newClass = {
           idAula: crypto.randomBytes(20).toString('HEX'),
           professor: req.body.professor,
-          idProfessor : req.body.idProfessor,
+          idProfessor: req.body.idProfessor,
           alunosCadastrados: docs.alunos,
           idTurma: req.body.idTurma,
           sala: req.body.sala,
@@ -97,7 +97,7 @@ handlers.post = async (req, res) => {
     }
     buscaCrew(idTurma);
   } catch (error) {
-    return res.status(400).send({message:error.message})
+    return res.status(400).send({ message: error.message })
   }
 };
 
@@ -109,8 +109,8 @@ handlers.put = async (req, res) => {
     });
   }
 
-  const {idAula} = req.params;
-  
+  const { idAula } = req.params;
+
   const classToUpdate = {
     sala: req.body.sala,
     data: req.body.data,
@@ -118,7 +118,7 @@ handlers.put = async (req, res) => {
     horario: req.body.horario,
     detalhe: req.body.detalhe,
   }
-  await Class.findOneAndUpdate({idAula: idAula}, classToUpdate);
+  await Class.findOneAndUpdate({ idAula: idAula }, classToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Aula atualizada com Sucesso",
@@ -127,9 +127,9 @@ handlers.put = async (req, res) => {
 };
 
 handlers.delete = async (req, res) => {
-  const {idAula} = req.params;
+  const { idAula } = req.params;
 
-  var deletedClass = await Class.findOneAndDelete({idAula: idAula });
+  var deletedClass = await Class.findOneAndDelete({ idAula: idAula });
   return res.status(201).send({
     success: "true",
     message: "Aula excluida com Sucesso",
