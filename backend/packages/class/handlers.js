@@ -1,5 +1,6 @@
 const Class = require("./classModel/class");
 const Crew = require("../crew/crewModel/crew");
+const studentClass = require("../studentsClass/studentClassModel/studentClassModel");
 const crypto = require('crypto');
 const handlers = {};
 
@@ -49,6 +50,24 @@ handlers.getOne = async (req, res) => {
       docs
     });
   });
+};
+
+
+handlers.getStudents = async (req, res) => {
+  const { idAula } = req.params;
+
+  studentClass.find({ idAula: idAula }, (err, docs) => {
+    if (err) {
+      return res.status(201).send({
+        success: "true",
+        err
+      });
+    }
+    return res.status(201).send({
+      success: "true",
+      docs
+    });
+  })
 };
 
 handlers.post = async (req, res) => {

@@ -2,7 +2,11 @@ const handlers = {};
 const studentClassModel = require("./studentClassModel/studentClassModel");
 
 handlers.get = async (req, res) => {
-  studentClassModel.find({}, (err, docs) => {
+  const { idAula } = req.params;
+
+  //trazer dados de alunos cadastrados em uma aula
+
+  studentClassModel.find({idAula : idAula }, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
@@ -36,8 +40,9 @@ handlers.post = async (req, res) => {
   }
 
   const newStudentsClass = {
-    nomePessoa: req.body.idAula,
+    idAula: req.body.idAula,
     idPessoa: req.body.idPessoa,
+    nomePessoa: req.body.nomePessoa,
     data: req.body.data,
     presenca: 1,
   };
