@@ -4,6 +4,7 @@ const handlers = require('./handlers');
 
 
 router.get('/', handlers.get);
+router.get('/:idAula', handlers.getStudents);
 router.put('/', handlers.put);
 router.post('/', handlers.post);
 router.delete('/delete', handlers.delete);
