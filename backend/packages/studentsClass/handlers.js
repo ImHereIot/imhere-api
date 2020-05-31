@@ -1,5 +1,5 @@
 const handlers = {};
-const studentClassModel = require("./studentClassModel/studentClassModel");
+const studentClass = require("./studentClassModel/studentClassModel");
 
 // handlers.get = async (req, res) => {
 //   const { idAula } = req.params;
