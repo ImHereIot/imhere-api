@@ -1,24 +1,25 @@
 const handlers = {};
 const studentClass = require("./studentClassModel/studentClassModel");
 
-// handlers.get = async (req, res) => {
-//   const { idAula } = req.params;
+handlers.get = async (req, res) => {
+  const idAula = req.body.idAula
+  const idPessoa = req.body.idPessoa
 
-//   //trazer dados de alunos cadastrados em uma aula
+  //trazer dados de alunos cadastrados em uma aula
 
-//   studentClassModel.find({idAula : idAula }, (err, docs) => {
-//     if (err) {
-//       return res.status(201).send({
-//         success: "true",
-//         err
-//       });
-//     }
-//     return res.status(201).send({
-//       success: "true",
-//       docs
-//     });
-//   });
-// };
+  studentClassModel.find({idAula : idAula, idPessoa : idPessoa }, (err, docs) => {
+    if (err) {
+      return res.status(201).send({
+        success: "true",
+        err
+      });
+    }
+    return res.status(201).send({
+      success: "true",
+      docs
+    });
+  });
+};
 
 handlers.getStudents = async (req, res) => {
   const { idAula } = req.params;
