@@ -21,9 +21,10 @@ const studentClass = require("./studentClassModel/studentClassModel");
 // };
 
 handlers.getStudents = async (req, res) => {
-  const { idAula } = req.params;
+  const idAula = req.body.idAula;
+  const idPessoa = req.body.idPessoa;
 
-  studentClass.find({ idAula: idAula }, (err, docs) => {
+  studentClass.find({ idAula: idAula, idPessoa : idPessoa }, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
