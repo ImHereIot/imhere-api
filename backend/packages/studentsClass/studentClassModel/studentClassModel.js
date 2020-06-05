@@ -5,7 +5,7 @@ const studentsClass = new mongoose.Schema({
   idPessoa: { type: String, required: true },
   nomePessoa: { type: String, required: true },
   presenca: { type: Number, required: true },
-  data: { type: String, required: true },
+  data: { type: Date },
 });
 
 studentsClass.pre("save", (next) => {

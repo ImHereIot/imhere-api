@@ -1,5 +1,7 @@
 const Class = require("./classModel/class");
 const Crew = require("../crew/crewModel/crew");
+const studentClass = require("../studentsClass/studentClassModel/studentClassModel");
+const Person = require("../person/personModel/person")
 const crypto = require('crypto');
 const handlers = {};
 
@@ -55,6 +57,7 @@ handlers.getOne = async (req, res) => {
 handlers.post = async (req, res) => {
   try {
     const idTurma = req.body.idTurma;
+    const aulaId =  crypto.randomBytes(20).toString('HEX');
 
     if (!req.body.professor) {
       return res.status(400).send({
@@ -70,12 +73,11 @@ handlers.post = async (req, res) => {
     }
 
     function buscaCrew(idToSearch) {
-      const search = idToSearch
+      const search = idToSearch;
       Crew.findOne({ idTurma: search }, (err, docs) => {
       }).then((docs) => {
-        console.log(docs.alunos);
         const newClass = {
-          idAula: crypto.randomBytes(20).toString('HEX'),
+          idAula: aulaId,
           professor: req.body.professor,
           idProfessor: req.body.idProfessor,
           alunosCadastrados: docs.alunos,
@@ -96,7 +98,27 @@ handlers.post = async (req, res) => {
         });
       })
     }
+    async function buscaAlunos(search) {
+      const docs = await Crew.findOne({ idTurma: search });
+      return await Promise.all(docs.alunos.map(registro => Person.findOne({ registro })));
+    }
+    async function insereStudentClass(data) {
+      const newClass = {
+        idAula: aulaId,
+        idPessoa: data.registro,
+        nomePessoa: data.nomePessoa,
+        presenca: 1,
+      }
+      const docs = await studentClass.create(newClass);
+      console.log(docs);
+    }
     buscaCrew(idTurma);
+    const returnBA = await buscaAlunos(idTurma)
+    returnBA.forEach(data => {
+      if(data != null) {
+        insereStudentClass(data);
+      }
+    })
   } catch (error) {
     return res.status(400).send({ message: error.message })
   }
