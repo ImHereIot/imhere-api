@@ -6,7 +6,7 @@ handlers.get = async (req, res) => {
   const idPessoa = req.body.idPessoa
 
   //trazer dados de alunos cadastrados em uma aula
-
+ 
   studentClass.find({idAula : idAula, idPessoa : idPessoa }, (err, docs) => {
     if (err) {
       return res.status(201).send({
