@@ -4,6 +4,7 @@ const studentClass = require("./studentClassModel/studentClassModel");
 handlers.get = async (req, res) => {
   const idAula = req.body.idAula
   const idPessoa = req.body.idPessoa
+  console.log(req.body);
 
   //trazer dados de alunos cadastrados em uma aula
  
