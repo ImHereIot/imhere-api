@@ -7,7 +7,7 @@ handlers.get = async (req, res) => {
 
   //trazer dados de alunos cadastrados em uma aula
 
-  studentClassModel.find({idAula : idAula, idPessoa : idPessoa }, (err, docs) => {
+  studentClass.find({idAula : idAula, idPessoa : idPessoa }, (err, docs) => {
     if (err) {
       return res.status(201).send({
         success: "true",
