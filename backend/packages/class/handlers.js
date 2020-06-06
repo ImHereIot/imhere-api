@@ -110,7 +110,6 @@ handlers.post = async (req, res) => {
         presenca: 1,
       }
       const docs = await studentClass.create(newClass);
-      console.log(docs);
     }
     buscaCrew(idTurma);
     const returnBA = await buscaAlunos(idTurma)
