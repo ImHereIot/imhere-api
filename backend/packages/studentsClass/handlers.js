@@ -7,7 +7,7 @@ handlers.get = async (req, res) => {
 
   var idAula = resultSplit[0];
   idAula.toString();
-  
+
   var idPessoa = resultSplit[1];
   idPessoa = parseInt(idPessoa);
   
@@ -81,7 +81,14 @@ handlers.post = async (req, res) => {
 };
 
 handlers.put = async (req, res) => {
-  const { idAula } = req.params;
+  var requisicao = req.params.idAula;
+  var resultSplit = requisicao.split('|');
+
+  var idAula = resultSplit[0];
+  idAula.toString();
+  
+  var idPessoa = resultSplit[1];
+  idPessoa = parseInt(idPessoa);
 
   if (!req.body.idAula) {
     return res.status(400).send({
