@@ -2,9 +2,16 @@ const handlers = {};
 const studentClass = require("./studentClassModel/studentClassModel");
 
 handlers.get = async (req, res) => {
-  const idAula = req.body.idAula
-  const idPessoa = req.body.idPessoa
-  console.log(req.body);
+  var requisicao = req.params.idAula;
+  var resultSplit = requisicao.split('|');
+
+  var idAula = resultSplit[0];
+  idAula.toString();
+  
+  var idPessoa = resultSplit[1];
+  idPessoa = parseInt(idPessoa);
+  
+  
 
   //trazer dados de alunos cadastrados em uma aula
  
