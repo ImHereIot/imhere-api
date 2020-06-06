@@ -90,17 +90,6 @@ handlers.put = async (req, res) => {
   var idPessoa = resultSplit[1];
   idPessoa = parseInt(idPessoa);
 
-  if (!req.body.idAula) {
-    return res.status(400).send({
-      success: "false",
-      message: "O idAula é necessário"
-    });
-  } else if (!req.body.idPessoa) {
-    return res.status(400).send({
-      success: "false",
-      message: "O idPessoa na aula é necessário"
-    });
-  }
   const studentsClassToUpdate = {
     // nomePessoa: req.body.idAula,
     // idPessoa: req.body.idPessoa,
