@@ -96,7 +96,7 @@ handlers.put = async (req, res) => {
     // data: req.body.data,
     presenca: req.body.presenca,
   }
-  await studentClassModel.findOneAndUpdate({ idAula: idAula }, studentsClassToUpdate);
+  await studentClass.findOneAndUpdate({ idAula: idAula }, studentsClassToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Pessoa Atualizada com Sucesso",
@@ -107,7 +107,7 @@ handlers.put = async (req, res) => {
 handlers.delete = async (req, res) => {
   const { idAula } = req.params;
 
-  var deletedStudentClass = studentClassModel.findOneAndDelete({ idAula: idAula });
+  var deletedStudentClass = studentClass.findOneAndDelete({ idAula: idAula });
   return res.status(201).send({
     success: "true",
     deletedStudentClass
