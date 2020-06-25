@@ -68,15 +68,15 @@ handlers.post = async (req, res) => {
       message: "A data é necessária"
     });
   }
-
+  const dateAula = new Date();
   const newStudentsClass = {
     idAula: req.body.idAula,
     idPessoa: req.body.idPessoa,
     nomePessoa: req.body.nomePessoa,
-    data: req.body.data,
+    data: dateAula,
     presenca: 1,
   };
-  studentClassModel.create(newStudentsClass);
+  studentClass.create(newStudentsClass);
   return res.status(201).send({
     success: "true",
     message: "estudanteAula Criada com Sucesso",
@@ -142,7 +142,10 @@ handlers.putIot = async (req, res) => {
     }
     return aulasDoAluno;
   }
-  const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+
+  }
 
   async function compareHour() {
     const getDate = new Date()
