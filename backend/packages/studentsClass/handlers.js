@@ -143,8 +143,9 @@ handlers.putIot = async (req, res) => {
     return aulasDoAluno;
   }
 
-  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
-    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+  var returnedData = '';
+  if (returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+    returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
   }
 
   async function compareHour() {
@@ -216,7 +217,7 @@ handlers.putIot = async (req, res) => {
   //whilse (returnedData.length) {
   //await compareHour();
   //}
-  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined && returnedData !== undefined ) {
     await compareHour();
   }
   else {
