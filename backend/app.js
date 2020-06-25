@@ -12,7 +12,7 @@ const url = config.bd_string;
 const options = {
   poolSize: 5,
   useNewUrlParser: true,
-  useUnifiedTopology: false
+  useUnifiedTopology: true
 };
 
 mongoose.connect(url, options);

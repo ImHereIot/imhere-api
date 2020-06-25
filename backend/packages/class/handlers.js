@@ -102,6 +102,7 @@ handlers.post = async (req, res) => {
       const docs = await Crew.findOne({ idTurma: search });
       return await Promise.all(docs.alunos.map(registro => Person.findOne({ registro })));
     }
+    
     async function insereStudentClass(data) {
       const newClass = {
         idAula: aulaId,
