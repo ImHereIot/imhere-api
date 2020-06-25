@@ -142,10 +142,6 @@ handlers.putIot = async (req, res) => {
     }
     return aulasDoAluno;
   }
-  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
-    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
-
-  }
 
   async function compareHour() {
     const getDate = new Date()
@@ -214,8 +210,19 @@ handlers.putIot = async (req, res) => {
     }
   }
   //whilse (returnedData.length) {
-  await compareHour();
+  //await compareHour();
   //}
+  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+    await compareHour();
+  }
+  else {
+    return res.status(201).send({
+      success: "true",
+      message: "Este aluno nao esta nesta aula",
+    });
+
+  }
 };
 
 handlers.delete = async (req, res) => {
