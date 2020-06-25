@@ -143,6 +143,10 @@ handlers.putIot = async (req, res) => {
     return aulasDoAluno;
   }
 
+  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+  }
+
   async function compareHour() {
     const getDate = new Date()
 
@@ -213,7 +217,6 @@ handlers.putIot = async (req, res) => {
   //await compareHour();
   //}
   if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
-    const returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
     await compareHour();
   }
   else {
