@@ -146,6 +146,11 @@ handlers.putIot = async (req, res) => {
   var returnedData = '';
   if (returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
     returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
+  } else {
+    return res.status(201).send({
+      success: "true",
+      message: "Não há aula hoje para você",
+    });
   }
 
   async function compareHour() {
@@ -154,44 +159,31 @@ handlers.putIot = async (req, res) => {
     const timezone = 'America/Sao_Paulo';
 
     function toTimeZone(time, zone) {
-      var format = 'YYYY/MM/DD HH:mm:ss';
-      return momentTMZ(time, format).tz(zone).format(format);
+      return momentTMZ(time).tz(zone).format('x');
     }
 
     const actualHour = toTimeZone(getDate,timezone);
-    console.log(actualHour);
     
     
-    console.log(actualHour , 'actualHour');
     
     //puxa hora atual para verificar
     var d = new Date(returnedData[0]);
-    console.log(d);
-    const classHour = d.getHours() + ":" + d.getMinutes();
+    const classHour = toTimeZone(d,timezone);
     //puxa hora atual para verificar
-
-    console.log(classHour , 'classHour');
-
+    
     
     //insere 20 minutos na hora atual para verificar se ele vai ter aula
-    var aheadHour = moment(classHour).subtract(20, 'm').toDate();
-    console.log(aheadHour);
-    const aheadDate = aheadHour.getHours() + ":" + aheadHour.getMinutes();
+    var aheadHour = moment(d).subtract(20, 'm').toDate();
     //insere 20 minutos na hora atual para verificar se ele vai ter aula
 
-    console.log(aheadDate , 'aheadDate');
 
     //retira 20 minutos na hora atual para verificar se ele vai ter falta 
-    var lateHour = moment(classHour).add(20, 'm').toDate();
-    const lateDate = lateHour.getHours() + ":" + lateHour.getMinutes();
-    console.log(lateHour);
-    console.log(lateDate, 'lateDate');
-    
+    var lateHour = moment(d).add(20, 'm').toDate();
 
     if (actualHour < aheadHour) {
       return res.status(201).send({
         success: "true",
-        message: "Esta Aula ainda não começou",
+        message: "Esta Aula ainda não começou, sua hora atual eh ",
       });
     }
     else if (actualHour > lateHour) {
@@ -217,16 +209,7 @@ handlers.putIot = async (req, res) => {
   //whilse (returnedData.length) {
   //await compareHour();
   //}
-  if(returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined && returnedData !== undefined ) {
-    await compareHour();
-  }
-  else {
-    return res.status(201).send({
-      success: "true",
-      message: "Este aluno nao esta nesta aula",
-    });
-
-  }
+  await compareHour();
 };
 
 handlers.delete = async (req, res) => {
