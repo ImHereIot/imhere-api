@@ -183,7 +183,7 @@ handlers.putIot = async (req, res) => {
     if (actualHour < aheadHour) {
       return res.status(201).send({
         success: "true",
-        message: "Esta Aula ainda não começou, sua hora atual eh ",
+        message: "Esta Aula ainda não começou, espere para realizar a chamada ",
       });
     }
     else if (actualHour > lateHour) {
@@ -194,7 +194,8 @@ handlers.putIot = async (req, res) => {
     }
     else {
       const updatedStudentClass = {
-        presenca: 2
+        presenca: 2,
+        data:actualHour
       }
       await studentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
 
