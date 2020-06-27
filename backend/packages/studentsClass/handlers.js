@@ -146,7 +146,6 @@ handlers.putIot = async (req, res) => {
     for (let index = 0; index < obj.length; index++) {
       aulasDoAluno.push(obj[index].horario);
     }
-    console.log(aulasDoAluno.horario);
     return aulasDoAluno;
   }
 
@@ -161,29 +160,33 @@ handlers.putIot = async (req, res) => {
   }
 
   async function compareHour() {
-    const getDate = new Date()
+    const getDate = new Date();
 
     const timezone = 'America/Sao_Paulo';
 
     function toTimeZone(time, zone) {
-      return momentTMZ(time).tz(zone).format('x');
+      return momentTMZ(time).subtract(3, 'h').toDate();
     }
 
     const actualHour = toTimeZone(getDate, timezone);
-
+    console.log(actualHour);
     var updated = 1;
     //puxa hora atual para verificar
     for (let index = 0; index < returnedData.length; index++) {
       var classHour = new Date(returnedData[index]);
       //const classHour = toTimeZone(d,timezone);
       //puxa hora atual para verificar
+      console.log(returnedData);
+
 
       //retira 20 minutos na hora atual para verificar se ele vai ter falta 
-      var aheadHour = moment(classHour).subtract(20, 'm').toDate();
+      var aheadHour = moment(actualHour).subtract(20, 'm').toDate();
       //insere 20 minutos na hora atual para verificar se ele vai ter aula
-      var lateHour = moment(classHour).add(20, 'm').toDate();
+      var lateHour = moment(actualHour).add(20, 'm').toDate();
+      console.log(classHour);
+      
 
-      if (actualHour < aheadHour || actualHour > lateHour) {
+      if (classHour < aheadHour || classHour > lateHour) {
         continue;
       } else {
 
