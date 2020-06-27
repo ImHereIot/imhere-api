@@ -118,8 +118,14 @@ handlers.putIot = async (req, res) => {
   };
   const personSearch = await buscaPerson();
 
+  const today = moment().startOf('day');
   async function buscaClass() {
-    const returnedClass = await Class.find({})
+    const returnedClass = await Class.find({
+      horario: {
+        $gte: today.toDate(),
+        $lte: moment(today).endOf('day').toDate()
+      }
+    })
     return returnedClass;
   };
 
@@ -140,11 +146,12 @@ handlers.putIot = async (req, res) => {
     for (let index = 0; index < obj.length; index++) {
       aulasDoAluno.push(obj[index].horario);
     }
+    console.log(aulasDoAluno.horario);
     return aulasDoAluno;
   }
 
   var returnedData = '';
-  if (returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined ) {
+  if (returnedFilteredClasses !== '' && returnedFilteredClasses !== null && returnedFilteredClasses !== undefined) {
     returnedData = buscaAulaAlunoHoras(returnedFilteredClasses);
   } else {
     return res.status(201).send({
@@ -162,49 +169,43 @@ handlers.putIot = async (req, res) => {
       return momentTMZ(time).tz(zone).format('x');
     }
 
-    const actualHour = toTimeZone(getDate,timezone);
-    
-    
-    
+    const actualHour = toTimeZone(getDate, timezone);
+
+    var updated = 1;
     //puxa hora atual para verificar
-    var d = new Date(returnedData[0]);
-    const classHour = toTimeZone(d,timezone);
-    //puxa hora atual para verificar
-    
-    
-    //insere 20 minutos na hora atual para verificar se ele vai ter aula
-    var aheadHour = moment(d).subtract(20, 'm').toDate();
-    //insere 20 minutos na hora atual para verificar se ele vai ter aula
+    for (let index = 0; index < returnedData.length; index++) {
+      var classHour = new Date(returnedData[index]);
+      //const classHour = toTimeZone(d,timezone);
+      //puxa hora atual para verificar
 
+      //retira 20 minutos na hora atual para verificar se ele vai ter falta 
+      var aheadHour = moment(classHour).subtract(20, 'm').toDate();
+      //insere 20 minutos na hora atual para verificar se ele vai ter aula
+      var lateHour = moment(classHour).add(20, 'm').toDate();
 
-    //retira 20 minutos na hora atual para verificar se ele vai ter falta 
-    var lateHour = moment(d).add(20, 'm').toDate();
+      if (actualHour < aheadHour || actualHour > lateHour) {
+        continue;
+      } else {
 
-    if (actualHour < aheadHour) {
-      return res.status(201).send({
-        success: "true",
-        message: "Esta Aula ainda não começou, espere para realizar a chamada ",
-      });
-    }
-    else if (actualHour > lateHour) {
-      return res.status(201).send({
-        success: "true",
-        message: "Esta Aula ainda não começou",
-      });
-    }
-    else {
-      const updatedStudentClass = {
-        presenca: 2,
-        data:actualHour
+        updated = 2
+        const updatedStudentClass = {
+          presenca: 2,
+          data: actualHour
+        }
+        await studentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
+
+        return res.status(201).send({
+          success: "true",
+          message: "Aula Marcada",
+          updatedStudentClass
+        });
       }
-      await studentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
-
+    }
+    if(updated == 1) {
       return res.status(201).send({
         success: "true",
-        message: "Aula Marcada",
-        updatedStudentClass
+        message: "não foi encontrada aula neste horário",
       });
-
     }
   }
   //whilse (returnedData.length) {
