@@ -97,7 +97,7 @@ handlers.put = async (req, res) => {
   const studentsClassToUpdate = {
     // nomePessoa: req.body.idAula,
     // idPessoa: req.body.idPessoa,
-    // data: req.body.data,
+    data: req.body.data,
     presenca: req.body.presenca,
   }
   await studentClass.findOneAndUpdate({ idAula: idAula }, studentsClassToUpdate);
