@@ -171,10 +171,12 @@ handlers.putIot = async (req, res) => {
 
     const actualHour = toTimeZone(getDate, timezone);
     var timeToCompare = moment(actualHour).toDate();
+    
     var updated = 1;
     //puxa hora atual para verificar
     for (let index = 0; index < returnedData.length; index++) {
       var ch = new Date(returnedData[index]);
+      var hourToSend = ch; 
       var classHour = moment(ch).add(3,'h').toDate();
       
       //retira 20 minutos na hora atual para verificar se ele vai ter falta 
@@ -189,7 +191,7 @@ handlers.putIot = async (req, res) => {
         updated = 2
         const updatedStudentClass = {
           presenca: 2,
-          data: actualHour
+          data: hourToSend
         }
         await studentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
 
