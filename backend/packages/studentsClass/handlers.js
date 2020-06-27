@@ -170,7 +170,7 @@ handlers.putIot = async (req, res) => {
     }
 
     const actualHour = toTimeZone(getDate, timezone);
-    var timeToCompare = moment(actualHour).add(3, 'h').toDate();
+    var timeToCompare = moment(actualHour).toDate();
     console.log(timeToCompare, 'aaaa');
     var updated = 1;
     //puxa hora atual para verificar
@@ -188,7 +188,8 @@ handlers.putIot = async (req, res) => {
       var lateHour = moment(timeToCompare).add(20, 'm').toDate();
       console.log(classHour, 'classhour');
       console.log(actualHour, 'actualHour');
-      console.log(timeToCompare, 'timeToCompare');
+      console.log(lateHour, 'lateHour');
+      console.log(aheadHour, 'aheadHour');
       
 
       if (classHour < aheadHour || classHour > lateHour) {
