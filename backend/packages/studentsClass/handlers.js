@@ -175,9 +175,13 @@ handlers.putIot = async (req, res) => {
     var updated = 1;
     //puxa hora atual para verificar
     for (let index = 0; index < returnedData.length; index++) {
-      var classHour = new Date(returnedData[index]);
+      var ch = new Date(returnedData[index]);
+      var classHour = moment(ch).add(3, 'h').toDate();
       //const classHour = toTimeZone(d,timezone);
       //puxa hora atual para verificar
+      console.log(classHour, 'classhour');
+      console.log(actualHour, 'actualHour');
+      console.log(timeToCompare, 'timeToCompare');
 
 
       //retira 20 minutos na hora atual para verificar se ele vai ter falta 
