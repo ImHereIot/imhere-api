@@ -211,9 +211,6 @@ handlers.putIot = async (req, res) => {
       });
     }
   }
-  //whilse (returnedData.length) {
-  //await compareHour();
-  //}
   await compareHour();
 };
 
