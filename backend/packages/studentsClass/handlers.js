@@ -179,15 +179,16 @@ handlers.putIot = async (req, res) => {
       var classHour = moment(ch).add(3, 'h').toDate();
       //const classHour = toTimeZone(d,timezone);
       //puxa hora atual para verificar
-      console.log(classHour, 'classhour');
-      console.log(actualHour, 'actualHour');
-      console.log(timeToCompare, 'timeToCompare');
+      
 
 
       //retira 20 minutos na hora atual para verificar se ele vai ter falta 
       var aheadHour = moment(timeToCompare).subtract(20, 'm').toDate();
       //insere 20 minutos na hora atual para verificar se ele vai ter aula
       var lateHour = moment(timeToCompare).add(20, 'm').toDate();
+      console.log(classHour, 'classhour');
+      console.log(actualHour, 'actualHour');
+      console.log(timeToCompare, 'timeToCompare');
       
 
       if (classHour < aheadHour || classHour > lateHour) {
