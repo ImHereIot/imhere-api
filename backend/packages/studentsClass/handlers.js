@@ -176,7 +176,7 @@ handlers.putIot = async (req, res) => {
     //puxa hora atual para verificar
     for (let index = 0; index < returnedData.length; index++) {
       var ch = new Date(returnedData[index]);
-      var classHour = moment(ch).add(3, 'h').toDate();
+      var classHour = moment(ch).toDate();
       //const classHour = toTimeZone(d,timezone);
       //puxa hora atual para verificar
       
