@@ -208,6 +208,7 @@ handlers.putIot = async (req, res) => {
       return res.status(201).send({
         success: "true",
         message: "não foi encontrada aula neste horário",
+        res
       });
     }
   }
