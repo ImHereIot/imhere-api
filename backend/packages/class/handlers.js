@@ -19,11 +19,33 @@ handlers.get = async (req, res) => {
 
     function filtraAulaAluno(aulas) {
       var retorno = [];
+      var today = new Date();
       aulas.forEach((busca) => {
         if (busca.alunosCadastrados.includes(registro)) {
           retorno.push(busca);
         }
       });
+
+      retorno.sort(function (a, b) {
+        if (a.data > b.data) {
+          return 1;
+        } else if (a.data < b.data) {
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+
+      retorno.sort(function (a, b) {
+        var u = a.data;
+        var c = `${u.getUTCDate()}/${u.getUTCMonth()}/${u.getFullYear()}`;
+        if (c != `${today.getUTCDate()}/${today.getUTCMonth()}/${today.getUTCFullYear()}`) {
+          return 0;
+        } else {
+          return -1;
+        }
+      });
+
       return retorno;
     }
 
@@ -57,7 +79,7 @@ handlers.getOne = async (req, res) => {
 handlers.post = async (req, res) => {
   try {
     const idTurma = req.body.idTurma;
-    const aulaId =  crypto.randomBytes(20).toString('HEX');
+    const aulaId = crypto.randomBytes(20).toString('HEX');
 
     if (!req.body.professor) {
       return res.status(400).send({
@@ -102,7 +124,7 @@ handlers.post = async (req, res) => {
       const docs = await Crew.findOne({ idTurma: search });
       return await Promise.all(docs.alunos.map(registro => Person.findOne({ registro })));
     }
-    
+
     async function insereStudentClass(data) {
       const newClass = {
         idAula: aulaId,
@@ -115,7 +137,7 @@ handlers.post = async (req, res) => {
     buscaCrew(idTurma);
     const returnBA = await buscaAlunos(idTurma)
     returnBA.forEach(data => {
-      if(data != null) {
+      if (data != null) {
         insereStudentClass(data);
       }
     })
