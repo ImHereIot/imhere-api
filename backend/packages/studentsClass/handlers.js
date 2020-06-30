@@ -1,5 +1,5 @@
 const handlers = {};
-const studentClass = require("./studentClassModel/studentClassModel");
+const StudentClass = require("./studentClassModel/studentClassModel");
 const Person = require("../person/personModel/person");
 const Class = require('../class/classModel/class');
 const moment = require('moment');
@@ -34,12 +34,44 @@ handlers.get = async (req, res) => {
 };
 
 handlers.getStudents = async (req, res) => {
-  const { idAula } = req.params;
+  const  idAula  = req.params.idAula;
+  const getDate = new Date();
 
-  studentClass.find({ idAula: idAula }, (err, docs) => {
+  const timezone = 'America/Sao_Paulo';
+
+  function toTimeZone(time, zone) {
+    return momentTMZ(time).tz(zone).toDate();
+  }
+  async function achaAula(idAula) {
+    const returnedClass = await Class.findOne({ idAula: idAula }, (err, docs) => {
+      if(docs) {
+        const actualHour = toTimeZone(getDate, timezone);
+        const updatedHour = moment(actualHour).subtract(3, 'h').toDate();
+
+        const ch = new Date(docs.horario);
+        const classHour = moment(ch).add(21,'m').toDate();
+        console.log(classHour);
+        console.log(updatedHour);
+        var i = 0;
+
+        StudentClass.find({ idAula: idAula },  (err, docs)  => {
+          docs.forEach(register => {
+            if(updatedHour > classHour) {
+              StudentClass.findOneAndUpdate({ idAula: register.idAula, presenca: 1}, { presenca: 3 }, (retorno) => {
+                  console.log('atualizou');
+              });
+            }
+          });
+        })
+      }
+    })
+  }
+
+  StudentClass.find({ idAula: idAula }, (err, docs) => {
+    achaAula(idAula);
     if (err) {
       return res.status(201).send({
-        success: "true",
+        success: "false",
         err
       });
     }
@@ -97,7 +129,7 @@ handlers.put = async (req, res) => {
   const studentsClassToUpdate = {
     presenca: req.body.presenca,
   }
-  await studentClass.findOneAndUpdate({ idAula: idAula, idPessoa: idPessoa }, studentsClassToUpdate);
+  await StudentClass.findOneAndUpdate({ idAula: idAula, idPessoa: idPessoa }, studentsClassToUpdate);
   return res.status(201).send({
     success: "true",
     message: "Pessoa Atualizada com Sucesso",
@@ -190,7 +222,7 @@ handlers.putIot = async (req, res) => {
           presenca: 2,
           data: hourToSend
         }
-        await studentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
+        await StudentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
 
         return res.status(201).send({
           success: "true",
@@ -215,7 +247,7 @@ handlers.putIot = async (req, res) => {
 handlers.delete = async (req, res) => {
   const { idAula } = req.params;
 
-  var deletedStudentClass = studentClass.findOneAndDelete({ idAula: idAula });
+  var deletedStudentClass = StudentClass.findOneAndDelete({ idAula: idAula });
   return res.status(201).send({
     success: "true",
     deletedStudentClass
