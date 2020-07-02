@@ -50,8 +50,6 @@ handlers.getStudents = async (req, res) => {
 
         const ch = new Date(docs.horario);
         const classHour = moment(ch).add(21,'m').toDate();
-        console.log(classHour);
-        console.log(updatedHour);
         var i = 0;
 
         StudentClass.find({ idAula: idAula },  (err, docs)  => {
@@ -168,14 +166,17 @@ handlers.putIot = async (req, res) => {
     return retorno;
   }
   const returnedClass = await buscaClass();
+  console.log(returnedClass);
   const returnedFilteredClasses = await filtraAulaAluno(returnedClass);
+  console.log(returnedFilteredClasses);
 
   function buscaAulaAlunoHoras(obj) {
     var aulasDoAluno = [];
     for (let index = 0; index < obj.length; index++) {
-      aulasDoAluno.push(obj[index].horario);
+      aulasDoAluno.push(obj[index]);
     }
-    console.log(aulasDoAluno.horario);
+    console.log(aulasDoAluno, 'aaa');
+
     return aulasDoAluno;
   }
 
@@ -200,11 +201,12 @@ handlers.putIot = async (req, res) => {
 
     const actualHour = toTimeZone(getDate, timezone);
     var timeToCompare = moment(actualHour).toDate();
-    
     var updated = 1;
+
     //puxa hora atual para verificar
-    for (let index = 0; index < returnedData.length; index++) {
-      var ch = new Date(returnedData[index]);
+    returnedData.forEach( async returnedData => {
+      var ch = new Date(returnedData.horario);
+      var aula = returnedData.idAula
       var hourToSend = ch; 
       var classHour = moment(ch).add(3,'h').toDate();
       
@@ -213,8 +215,9 @@ handlers.putIot = async (req, res) => {
       //insere 20 minutos na hora atual para verificar se ele vai ter aula
       var lateHour = moment(timeToCompare).add(20, 'm').toDate();
 
+
       if (classHour < aheadHour || classHour > lateHour) {
-        continue;
+        return;
       } else {
 
         updated = 2
@@ -222,15 +225,14 @@ handlers.putIot = async (req, res) => {
           presenca: 2,
           data: hourToSend
         }
-        await StudentClass.findOneAndUpdate({ idPessoa: personSearch.registro }, updatedStudentClass);
-
+        await StudentClass.findOneAndUpdate({ idPessoa: personSearch.registro, idAula: aula }, updatedStudentClass);
         return res.status(201).send({
           success: "true",
           message: "Aula Marcada",
           updatedStudentClass
         });
       }
-    }
+    }); 
     if(updated == 1) {
       return res.status(201).send({
         success: "true",
